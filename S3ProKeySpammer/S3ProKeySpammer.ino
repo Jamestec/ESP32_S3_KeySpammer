@@ -7,7 +7,7 @@
 #define DEBUGGING false
 
 #define RGB_BUILTIN 38
-#define BRIGHTNESS 5
+#define BRIGHTNESS 50
 #define MS_BETWEEN_LOOPS 100
 #define PRESS_PER_LOOPS 5
 #define PRESS_RELEASE_LOOP 3
@@ -160,6 +160,7 @@ void loop() {
       // if (DEBUGGING) Serial.printf("Starting deep sleep, wake threshold = %d\n", wake_touch_threshold);
       if (DEBUGGING) Serial.println("Starting deep sleep");
       if (DEBUGGING) Serial.flush();
+      delay(1000); // LED may not turn off in time otherwise.
       esp_deep_sleep_start();
     }
   }
