@@ -42,6 +42,9 @@ USBHIDKeyboard Keyboard;
 
 void setup() {
   Serial.begin(115200);
+  if (DEBUGGING) {
+    delay(1000);
+  }
 
   // Optional: Set the threshold to 5% of the benchmark value. Only effective if threshold = 0.
   touchSetDefaultThreshold(5);
@@ -156,11 +159,14 @@ void loop() {
       // https://github.com/espressif/arduino-esp32/issues/7150
       esp_sleep_pd_config(ESP_PD_DOMAIN_RTC_PERIPH, ESP_PD_OPTION_ON);
       esp_sleep_enable_touchpad_wakeup();
-      neopixelWrite(RGB_BUILTIN, 0, 0, 0);
+      neopixelWrite(RGB_BUILTIN, 0, 0, 1);
+      for (int i = 0; i < 10; i++) {
+        neopixelWrite(RGB_BUILTIN, 0, 0, 0);
+        delay(10);
+      }
       // if (DEBUGGING) Serial.printf("Starting deep sleep, wake threshold = %d\n", wake_touch_threshold);
       if (DEBUGGING) Serial.println("Starting deep sleep");
       if (DEBUGGING) Serial.flush();
-      delay(1000); // LED may not turn off in time otherwise.
       esp_deep_sleep_start();
     }
   }
